@@ -5,5 +5,6 @@ from . import views
 # the `name='home'` is a kwag, that gives the route a name, naming routes is optional, but best practices 
 # later on, we'll see just how useful this is.
 urlpatterns = [
-    path('', views.home, name='home')
+    path('', views.home, name='home'),
+    path('about/', views.about, name='about'),
 ]
