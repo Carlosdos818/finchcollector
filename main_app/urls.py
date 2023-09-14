@@ -6,5 +6,8 @@ from . import views
 # later on, we'll see just how useful this is.
 urlpatterns = [
     path('', views.home, name='home'),
+    # Route to about
     path('about/', views.about, name='about'),
+    # Route for finches index
+    path('finches/', views.finches_index, name='index'),
 ]
