@@ -1,4 +1,6 @@
 from django.shortcuts import render
+# We need to import our class based views
+from django.views.generic.edit import CreateView
 
 # in order to use the model, we have to import
 from .models import Finch
@@ -51,3 +53,10 @@ def finches_detail(request, finch_id):
     # print(finch)
     return render(request, 'finches/detail.html', { 'finch': finch })
 
+# Now we can inherit from the CreateView to make our finches create view
+class FinchCreate(CreateView):
+    model = Finch
+    fields = '__all__'
+    # we can also do this if you  only want to pass a few field's items
+    # fields = ['name', 'color', 'size', 'habitat']
+    
