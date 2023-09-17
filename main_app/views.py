@@ -1,6 +1,6 @@
 from django.shortcuts import render
 # We need to import our class based views
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 # in order to use the model, we have to import
 from .models import Finch
@@ -60,3 +60,13 @@ class FinchCreate(CreateView):
     # we can also do this if you  only want to pass a few field's items
     # fields = ['name', 'color', 'size', 'habitat']
     
+# UpdateView, very similar to  CreateView, need model and fields
+class FinchUpdate(UpdateView):
+    model = Finch
+    # Lets make it so you can't rename a finch
+    fields = ['color', 'size', 'habitat']
+
+class FinchDelete(DeleteView):
+    model = Finch
+    # Instead of fields or using the absolute_url, we just use a success_url
+    success_url = '/finches'
