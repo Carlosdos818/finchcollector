@@ -14,4 +14,9 @@ urlpatterns = [
     path('finches/<int:finch_id>', views.finches_detail, name='detail'),
     # Route for create finch
     path('finches/create/', views.FinchCreate.as_view(), name='finches_create'),
+    # Route to update finch
+    path('finches/<int:pk>/update/', views.FinchUpdate.as_view(), name='finches_update'),
+    # Route to delete finch
+    path('finches/<int:pk>/delete/', views.FinchDelete.as_view(), name='finches_delete'),
+
 ]
