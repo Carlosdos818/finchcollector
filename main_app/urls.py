@@ -12,4 +12,6 @@ urlpatterns = [
     path('finches/', views.finches_index, name='index'),
     # Route for the finches details
     path('finches/<int:finch_id>', views.finches_detail, name='detail'),
+    # Route for create finch
+    path('finches/create/', views.FinchCreate.as_view(), name='finches_create'),
 ]
