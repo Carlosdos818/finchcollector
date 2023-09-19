@@ -59,13 +59,13 @@ class FinchCreate(CreateView):
     fields = '__all__'
     # we can also do this if you  only want to pass a few field's items
     # fields = ['name', 'color', 'size', 'habitat']
-    
-# UpdateView, very similar to  CreateView, need model and fields
+
+# UpdateView very similar to CreateView, need model and fields
 class FinchUpdate(UpdateView):
     model = Finch
     # Lets make it so you can't rename a finch
     fields = ['color', 'size', 'habitat']
-
+# DeleteView very similar to CreateView, need model and fields
 class FinchDelete(DeleteView):
     model = Finch
     # Instead of fields or using the absolute_url, we just use a success_url
