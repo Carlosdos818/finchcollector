@@ -1,6 +1,8 @@
 from django.db import models
 # need the reverse method from django urls for redirects
 from django.urls import reverse
+# import date module from datetime
+from datetime import date
 
 # A tuple of 2-tuples
 MEALS = (
@@ -25,6 +27,14 @@ class Finch(models.Model):
         return reverse('detail', kwargs={'finch_id': self.id})
     
 
+    # add a method to determine finch hunger
+    def fed_for_today(self):
+        # Filter produces an (QuerySet) for all feedings from current date
+        # Count the items in that array, compare to the length of MEALS (tuple)
+        # We'll return a boolean that we can use in our template
+        return self.feeding_set.filter(date=date.today()).count() >= len(MEALS)
+    
+
     # Model for Feeding (Finch -|---< Feeding)
 class Feeding(models.Model):
     date = models.DateField('feeding date')
@@ -40,3 +50,9 @@ class Feeding(models.Model):
     def __str__(self):
         # Use the 'meal' attribute directly to get the meal name
         return f"{self.get_meal_display()} on {self.date}"
+
+    
+
+    #  Add Meta class to change the default sorting
+    class Meta:
+        ordering=['-date']
