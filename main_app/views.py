@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 # We need to import our class based views
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView
+from django.views.generic.detail import DetailView
 
 # in order to use the model, we have to import
-from .models import Finch
+from .models import Finch, Toy
 from .forms import FeedingForm
 
 # This are the old cats, now we user models.
@@ -51,7 +53,13 @@ def finches_detail(request, finch_id):
     finch = Finch.objects.get(id=finch_id)
     # This will instantiate a feeding form to be rendered in the template
     feeding_form = FeedingForm()
-    return render(request, 'finches/detail.html', { 'finch': finch, 'feeding_form': feeding_form })
+    # Id-List
+    id_list = finch.toys.all().values_list('id')
+    # print(f'The id_list for the finch toys: {id_list}')
+    # print(f'the toys finch dont got: {toys_finch_doesnt_have}')
+    # Finch Doesn't have toys
+    toys_finch_doesnt_have = Toy.objects.exclude(id__in=id_list)
+    return render(request, 'finches/detail.html', { 'finch': finch, 'feeding_form': feeding_form, 'toys': toys_finch_doesnt_have })
 
 # View for adding a feeding to a finch
 def add_feeding(request, finch_id):
@@ -72,9 +80,9 @@ def add_feeding(request, finch_id):
 # Now we can inherit from the CreateView to make our finches create view
 class FinchCreate(CreateView):
     model = Finch
-    fields = '__all__'
+    # fields = '__all__'
     # we can also do this if you  only want to pass a few field's items
-    # fields = ['name', 'color', 'size', 'habitat']
+    fields = ['name', 'color', 'size', 'habitat']
 
 # UpdateView very similar to CreateView, need model and fields
 class FinchUpdate(UpdateView):
@@ -86,3 +94,29 @@ class FinchDelete(DeleteView):
     model = Finch
     # Instead of fields or using the absolute_url, we just use a success_url
     success_url = '/finches'
+
+
+# views for Toys
+# ToyList
+class ToyList(ListView):
+    model = Toy
+    template_name = 'toys/index.html'
+# ToyDetail
+class ToyDetail(DetailView):
+    model = Toy
+    template_name = 'toys/detail.html'
+# ToyCreate
+class ToyCreate(CreateView):
+    model = Toy
+    fields = ['name', 'color']
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+# ToyUpdate
+class ToyUpdate(UpdateView):
+    model = Toy
+    fields = ['name', 'color']
+# ToyDelete
+class ToyDelete(DeleteView):
+    model = Toy
+    success_url = '/toys/'
