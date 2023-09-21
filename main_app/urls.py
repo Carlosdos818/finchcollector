@@ -20,6 +20,8 @@ urlpatterns = [
     path('finches/<int:pk>/delete/', views.FinchDelete.as_view(), name='finches_delete'),
     # Route to feeding model
     path('finches/<int:finch_id>/add_feeding/', views.add_feeding, name='add_feeding'),
+    # Url for s3 upload
+    path('finches/<int:finch_id>/add_photo', views.add_photo, name='add_photo'),
     # We need several urls for out Toys to work
     # we'll need a list, detail, create, update, delete
     path('toys/', views.ToyList.as_view(), name='toys_index'),

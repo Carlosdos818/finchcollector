@@ -70,3 +70,10 @@ class Feeding(models.Model):
     #  Add Meta class to change the default sorting
     class Meta:
         ordering=['-date']
+
+class Photo(models.Model):
+    url = models.CharField(max_length=200)
+    finch = models.ForeignKey(Finch, on_delete=models.CASCADE)
+
+    def __str__(delf):
+        return f'Photo for finch_id: {self.finch_id} @{self.url}'
