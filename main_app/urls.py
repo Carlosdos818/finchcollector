@@ -28,5 +28,8 @@ urlpatterns = [
     path('toys/<int:pk>/delete', views.ToyDelete.as_view(), name='toys_delete'),
     path('toys/<int:pk>/', views.ToyDetail.as_view(), name='toys_detail'),
     # eventually, once it's all set up, we'll add two views to handle the relationship between a finch a toy.
-
+    # Associate/Add a toy
+    path('finches/<int:finch_id>/assoc_toy/<int:toy_id>/', views.assoc_toy, name='assoc_toy'),
+    # Unassociate/Remove a toy
+    path('finches/<int:finch_id>/unassoc_toy/<int:toy_id>/', views.unassoc_toy, name='unassoc_toy'),
 ]

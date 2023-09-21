@@ -120,3 +120,14 @@ class ToyUpdate(UpdateView):
 class ToyDelete(DeleteView):
     model = Toy
     success_url = '/toys/'
+
+# Adds toy to finch
+def assoc_toy(request, finch_id, toy_id):
+    # To make the association, we target the finch and pass the toy id
+    Finch.objects.get(id=finch_id).toys.add(toy_id)
+    return redirect('detail', finch_id=finch_id)
+# Removes toy from finch
+def unassoc_toy(request, finch_id, toy_id):
+    # To make the association, we target the finch and pass the toy id
+    Finch.objects.get(id=finch_id).toys.remove(toy_id)
+    return redirect('detail', finch_id=finch_id)

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-
+            <!-- Finch Details -->
     <h1>Finch Details</h1>
     <div class="row">
         <div class="col s6">
@@ -20,8 +20,8 @@
                     <a href="{% url 'finches_delete' finch.id %}">Delete</a>
                 </div>
             </div>
-
         </div>
+                    <!--Feedings  -->
         <div class="col s6">
             <form action="{% url 'add_feeding' finch.id %}" method="POST"> 
                 {% csrf_token %}
@@ -67,6 +67,13 @@
                             </span> 
                         </div>
                     </div>
+                                        <!-- Unassociate Toy -->
+                    <div class="card-action">
+                        <form action="{% url 'unassoc_toy' finch.id toy.id %}" method="POST">
+                            {% csrf_token %}
+                            <button class="btn red" type="submit">-</button>
+                        </form>
+                    </div>
                 {% endfor %}
             {% else %}
                 <!-- if we don't have toys, tell the user -->
@@ -84,9 +91,9 @@
                                 A <span style="color: {{ toy.color }}">{{ toy.color }}</span> {{ toy.name }}
                             </span> 
                         </div>
-                        <!-- Add Button for Available Toys -->
+                        <!-- Add Button for Available Toys/Associate Toy -->
                         <div class="card-action">
-                            <form action="" method="POST">
+                            <form action="{% url 'assoc_toy' finch.id toy.id %}" method="POST">
                                 {% csrf_token %}
                                 <button class="btn" type="submit">+</button>
                             </form>
